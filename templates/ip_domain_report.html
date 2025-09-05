@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="card shadow p-4">
+    <h2 class="mb-3">{{ report_type }} Report for <span class="text-primary">{{ value }}</span></h2>
+
+    <!-- General Info -->
+    <h4 class="mt-3">General Info</h4>
+    <ul class="list-group mb-3">
+        <li class="list-group-item"><b>Reputation:</b> {{ data.attributes.reputation }}</li>
+        <li class="list-group-item"><b>ASN:</b> {{ data.attributes.asn }}</li>
+        <li class="list-group-item"><b>Network:</b> {{ data.attributes.network }}</li>
+        <li class="list-group-item"><b>Total Votes:</b> 👍 {{ data.attributes.total_votes.harmless }} | 👎 {{
+            data.attributes.total_votes.malicious }}</li>
+    </ul>
+
+    <!-- Stats -->
+    <h4 class="mt-3">Analysis Stats</h4>
+    <div class="row">
+        {% for key, val in data.attributes.last_analysis_stats.items() %}
+        <div class="col-md-3 mb-2">
+            <div class="card text-center shadow-sm border-0
+                {% if key == 'malicious' %} bg-danger text-white
+                {% elif key == 'suspicious' %} bg-warning
+                {% elif key == 'harmless' %} bg-success text-white
+                {% else %} bg-secondary text-white {% endif %}">
+                <div class="card-body">
+                    <h5>{{ key|capitalize }}</h5>
+                    <p class="fs-4 fw-bold">{{ val }}</p>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <!-- Detection Engines -->
+    <h4 class="mt-3">Detection Engines</h4>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Engine</th>
+                <th>Category</th>
+                <th>Result</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for engine, result in data.attributes.last_analysis_results.items() %}
+            <tr
+                class="{% if result.category == 'malicious' %}table-danger{% elif result.category == 'suspicious' %}table-warning{% elif result.category == 'harmless' %}table-success{% endif %}">
+                <td>{{ result.engine_name }}</td>
+                <td>{{ result.category }}</td>
+                <td>{{ result.result if result.result else '-' }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <!-- WHOIS -->
+    <h4 class="mt-3">WHOIS Data</h4>
+    <pre class="bg-light p-3 border rounded">{{ data.attributes.whois }}</pre>
+
+    <a class="btn btn-dark mt-3" href="/">⬅ Back to Home</a>
+</div>
+{% endblock %}

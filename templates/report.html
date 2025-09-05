@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Scan Report</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+    <h1>Report for {{ filename }} ({{ type }})</h1>
+
+    <h2>Summary:</h2>
+    <ul>
+        <li>Malicious: {{ stats.malicious }}</li>
+        <li>Suspicious: {{ stats.suspicious }}</li>
+        <li>Harmless: {{ stats.harmless }}</li>
+        <li>Undetected: {{ stats.undetected }}</li>
+    </ul>
+
+    <h2>Detailed Results:</h2>
+    <table border="1">
+        <tr>
+            <th>Engine</th>
+            <th>Category</th>
+            <th>Result</th>
+        </tr>
+        {% for engine, details in results.items() %}
+        <tr>
+            <td>{{ engine }}</td>
+            <td>{{ details.category }}</td>
+            <td>{{ details.result if details.result else "Clean" }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <form action="/download_report" method="POST">
+        <input type="hidden" name="filename" value="{{ filename }}">
+        <input type="hidden" name="stats" value="{{ stats }}">
+        <input type="hidden" name="results" value="{{ results }}">
+        <button type="submit">⬇ Download Report (PDF)</button>
+    </form>
+
+    <a href="/">⬅ Back</a>
+</body>
+
+</html>

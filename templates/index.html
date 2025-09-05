@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="card shadow p-4">
+    <h2 class="mb-4">Choose Scan Type</h2>
+
+    <form class="mb-3" action="/scan_file" method="post" enctype="multipart/form-data">
+        <label class="form-label">Upload a File</label>
+        <input class="form-control mb-2" type="file" name="file" required>
+        <button class="btn btn-primary w-100">Scan File</button>
+    </form>
+
+    <form class="mb-3" action="/scan_url" method="post">
+        <label class="form-label">Enter a URL</label>
+        <input class="form-control mb-2" type="text" name="url" placeholder="https://example.com" required>
+        <button class="btn btn-success w-100">Scan URL</button>
+    </form>
+
+    <form class="mb-3" action="/scan_ip" method="post">
+        <label class="form-label">Enter an IP Address</label>
+        <input class="form-control mb-2" type="text" name="ip" placeholder="8.8.8.8" required>
+        <button class="btn btn-warning w-100">Scan IP</button>
+    </form>
+
+    <form class="mb-3" action="/scan_domain" method="post">
+        <label class="form-label">Enter a Domain</label>
+        <input class="form-control mb-2" type="text" name="domain" placeholder="example.com" required>
+        <button class="btn btn-info w-100">Scan Domain</button>
+    </form>
+</div>
+{% endblock %}
