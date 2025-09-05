@@ -8,7 +8,7 @@ import io
 
 app = Flask(__name__)
 
-API_KEY = "8ee4b6afbb1e06bf41cb1af821670bce29ffc6e7cf41ed527d5000f677d547c2"  # Replace with your VirusTotal API key
+API_KEY = ""  # Replace with your VirusTotal API key
 HEADERS = {"x-apikey": API_KEY}
 BASE_URL = "https://www.virustotal.com/api/v3"
 
@@ -137,3 +137,4 @@ def download_report():
 
 if __name__ == "__main__":
     app.run(debug=True)
+
